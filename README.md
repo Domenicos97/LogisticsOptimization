@@ -6,13 +6,13 @@ Una pipeline logistica in Python che integra **Data Quality**, **Graph Theory** 
 Il progetto è strutturato in tre fasi modulari:
 
 1. 🛡️ **Fase 1: Data Validation (Pydantic)**
-   Simulando la ricezione di dati da un'API esterna, il modello intercetta i payload JSON. `Pydantic` assicura la corretta tipizzazione (Type Hinting) e applica regole di business rigorose (es. *il costo di una rotta deve essere strettamente > 0*), evitando che dati anomali raggiungano il motore di calcolo.
+   I dati grezzi vengono simulati come se arrivassero da un’API esterna e vengono validati prima di entrare nella pipeline. Pydantic gestisce la tipizzazione e applica vincoli di business rigorosi, come la positività del costo di ogni rotta, impedendo che valori non validi raggiungano il modello di ottimizzazione.
 
 2. 🕸️ **Fase 2: Graph Modeling (NetworkX)**
-   I dati validati vengono trasformati in un grafo pesato e direzionato (*Weighted DiGraph*). Questo permette di mappare topologicamente la rete logistica, estrarre le matrici di adiacenza e visualizzare le connessioni tra i magazzini.
+   Una volta validati, i dati vengono trasformati in un grafo pesato e direzionato (Weighted DiGraph). Questa rappresentazione consente di modellare la rete logistica, analizzarne la struttura topologica e visualizzare le connessioni tra i nodi.
 
 3. 🧮 **Fase 3: Mathematical Optimization (Pyomo)**
-   Il problema viene convertito in un modello matematico *object-oriented*. Tramite `Pyomo`, vengono definiti la Funzione Obiettivo (minimizzazione dei costi di trasporto) e i Vincoli (conservazione del flusso ai nodi). Il modello viene poi elaborato da un solver lineare open-source (`GLPK`) per l'estrazione del percorso ottimale ordinato.
+   Il grafo viene infine tradotto in un modello matematico orientato all’ottimizzazione. Con Pyomo vengono definiti la funzione obiettivo, che minimizza il costo totale di trasporto, e i vincoli di conservazione del flusso sui nodi. Il modello viene risolto tramite un solver lineare open-source (GLPK) per ottenere il percorso ottimale.
 
 ## 📊 Visualizzazione della Rete Topologica
 *(Il codice salva automaticamente questa mappa come file PNG nella root del progetto)*
